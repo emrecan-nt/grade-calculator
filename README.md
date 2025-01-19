@@ -1,21 +1,37 @@
-<<<<<<< HEAD
-# ortalama_hesaplayici
+# 📚 Not Hesaplayıcı
 
-A new Flutter project.
+Flutter ile geliştirilmiş **dinamik bir not hesaplayıcı**. Notları hızlıca hesaplamak ve takip etmek için tasarlandı. Basit ve kullanıcı dostu. 🎓
 
-## Getting Started
+## 🛠️ Özellikler
 
-This project is a starting point for a Flutter application.
+- **Birden Fazla Ders Ekleme:** Kolayca derslerinizi ve notlarınızı ekleyebilirsiniz. ➕
+- **Not Girişi:** Harf notlarını (örneğin A, B, C) girerek ortalamanızı hesaplayın. 🔢
+- **Ortalamanızı Takip Edin:** Dersleri ekledikçe veya değiştirdikçe ortalamanız gerçek zamanlı olarak güncellenir. 📊
+- **Kullanıcı Dostu Arayüz:** Temiz ve anlaşılır bir tasarım. 🎨
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Nasıl Çalışır?
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. **Derslerinizi Ekleyin:**
+   - "Ders Ekle" butonuna tıklayarak yeni dersler ve notlar ekleyebilirsiniz. ✏️
+   
+2. **Notlarınızı Girin:**
+   - Her bir dersin notunu (örneğin A, B, C) girin, uygulama otomatik olarak ortalamanızı hesaplayacaktır. 📈
+   
+3. **Ortalamanızı Görüntüleyin:**
+   - Derslerinizi ekledikçe genel ortalamanız ekranın üst kısmında görünür. 🌟
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
-# Ortalama-Hesaplay-c-
-A dynamic grade calculator built with Flutter, designed to calculate and track grades efficiently. Simple and user-friendly.
->>>>>>> 766d08e3fb0b085082caa631b466f43aa6dd8715
+## 📥 Kurulum
+
+1. Reposuyu klonlayın:
+   ```bash
+   git clone https://github.com/emrecan-nt/grade-calculator.git
+   Proje klasörüne gidin:
+   cd grade-calculator
+   Bağımlılıkları yükleyin:
+   flutter pub get
+   Uygulamayı çalıştırın:
+   flutter run
+   ```
+## 💡 Katkıda Bulunma
+ Projeyi çatallayarak (fork) geliştirebilir ve pull request gönderebilirsiniz. Önerileriniz veya geliştirmeleriniz varsa, bir issue (sorun) açabilirsiniz. 📝
+   
