@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:ortalama_hesaplayici/model.dart';
 
 class data {
+  static List<Ders> eklenecekDers = [];
+  static dersEkle(Ders ders) {
+    eklenecekDers.add(ders);
+  }
+
+  static ortalamaHesapla() {
+    double toplamNot = 0;
+    double toplamKredi = 0;
+
+    eklenecekDers.forEach((element) {
+      toplamNot = toplamNot + (element.krediDegeri * element.harfDegeri);
+      toplamKredi += element.krediDegeri;
+    });
+    return toplamNot / toplamKredi;
+  }
+
   static List<String> _harfNotlari() {
     return ['AA', 'BA', 'BB', 'CB', 'DC', 'DD', 'FD', 'FF'];
   }
@@ -35,6 +52,19 @@ class data {
             value: _notlar(e),
             child: Text(e),
           ),
+        )
+        .toList();
+  }
+
+  static List<int> _krediler() {
+    return List.generate(10, (index) => index + 1).toList();
+  }
+
+  static List<DropdownMenuItem<double>> tumkrediler() {
+    return _krediler()
+        .map(
+          (e) =>
+              DropdownMenuItem(value: e.toDouble(), child: Text(e.toString())),
         )
         .toList();
   }

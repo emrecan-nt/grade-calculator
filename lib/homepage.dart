@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ortalama_hesaplayici/data.dart';
+import 'package:ortalama_hesaplayici/dersler.dart';
+import 'package:ortalama_hesaplayici/harf_dropdown.dart';
+import 'package:ortalama_hesaplayici/kredi_dropdown.dart';
+import 'package:ortalama_hesaplayici/model.dart';
 import 'package:ortalama_hesaplayici/ortalama.dart';
 import 'package:ortalama_hesaplayici/sabitler.dart';
 
@@ -10,11 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  GlobalKey formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   double secilenDeger = 4;
+  double secilenKrediDeger = 1;
+  String girilenDers = '';
   @override
   Widget build(BuildContext Context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Center(
           child: Text(Sabitler.baslik, style: Sabitler.baslikstyle),
@@ -31,14 +38,19 @@ class _HomePageState extends State<HomePage> {
             children: [
               Expanded(flex: 2, child: _buildForm()),
               Expanded(
-                child: OrtalamaGoster(dersSayisi: 1, ortalama: 4.2563),
+                child: OrtalamaGoster(
+                    dersSayisi: data.eklenecekDers.length,
+                    ortalama: data.ortalamaHesapla()),
               ),
             ],
           ),
           Expanded(
-            child: Container(
-              child: Text('Liste buraya gelecek'),
-              color: Colors.yellowAccent,
+            child: DersListesi(
+              onElamanCikar: (index) {
+                print('index: $index');
+                data.eklenecekDers.removeAt(index);
+                setState(() {});
+              },
             ),
           ),
         ],
@@ -51,17 +63,41 @@ class _HomePageState extends State<HomePage> {
       key: formKey,
       child: Column(
         children: [
-          _buildTextformfiled(),
+          Padding(
+            padding: Sabitler.YatayPadding8,
+            child: _buildTextformfiled(),
+          ),
+          Padding(padding: Sabitler.YatayPadding8),
+          SizedBox(height: 5),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildHarfler(),
+              SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: Sabitler.YatayPadding8,
+                  child: HarfDropdown(
+                    onHarfSecildi: (harf) {
+                      secilenDeger=harf;
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: Sabitler.YatayPadding8,
+                  child: KrediDropdown(onKrediSecildi: (kredi){
+                    secilenKrediDeger=kredi;
+                  }),
+                ),
+              ),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.accessibility_new_rounded)),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.accessibility_new_rounded)),
+                onPressed: _dersEkleVeOrtalamaHesapla,
+                icon: Icon(Icons.arrow_forward_ios_sharp),
+                color: Sabitler.anaRenk,
+              ),
             ],
           ),
         ],
@@ -71,10 +107,23 @@ class _HomePageState extends State<HomePage> {
 
   _buildTextformfiled() {
     return TextFormField(
+      onSaved: (deger) {
+        setState(() {
+          girilenDers = deger!;
+        });
+      },
+      validator: (s) {
+        if (s!.length <= 0) {
+          return 'Ders Adını Giriniz';
+        } else {
+          return null;
+        }
+      },
       decoration: InputDecoration(
-        labelText: 'Matematik',
+        labelText: 'Ders Adı',
         border: OutlineInputBorder(
           borderRadius: Sabitler.borderRadius,
+          borderSide: BorderSide.none,
         ),
         filled: true,
         fillColor: Sabitler.anaRenk.shade100,
@@ -82,26 +131,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _buildHarfler() {
-    return Container(
-      padding: Sabitler.DropdownPadding,
-      decoration: BoxDecoration(
-        color: Sabitler.anaRenk.shade100,
-        borderRadius: Sabitler.borderRadius,
-      ),
-      child: DropdownButton<double>(
-        elevation: 16,
-        iconEnabledColor: Sabitler.anaRenk.shade200,
-        value: secilenDeger,
-        onChanged: (deger) {
-          setState(() {
-            secilenDeger = deger!;
-            print(deger);
-          });
-        },
-        underline: Container(),
-        items: data.harfNotlari(),
-      ),
-    );
+ 
+
+  void _dersEkleVeOrtalamaHesapla() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      var eklenecekDers = Ders(
+          ad: girilenDers,
+          harfDegeri: secilenDeger,
+          krediDegeri: secilenKrediDeger);
+      data.dersEkle(eklenecekDers);
+      setState(() {});
+    }
   }
 }

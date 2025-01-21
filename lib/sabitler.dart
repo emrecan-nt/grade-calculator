@@ -22,4 +22,5 @@ class Sabitler {
   );
   static final DropdownPadding =
       EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+  static final YatayPadding8 = EdgeInsets.symmetric(horizontal: 8);
 }
